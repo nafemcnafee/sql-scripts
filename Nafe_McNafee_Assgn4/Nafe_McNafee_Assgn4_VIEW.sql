@@ -1,0 +1,345 @@
+/*
+File: Nafe_McNafee_Assgn4.sql
+Author: Nafe McNafee - 991408856
+Description:  A view created for service customers with customer name,customer city, car make, 
+              car model, service invoice number, service invoice date, service invoice total. 
+              8. What is the average amount spent for the services of JAGUAR cars 
+              5.What is the average of the amount spent by customers from Mississauga?
+              6. How many customers from Toronto have brought their car for service?
+*/
+CREATE OR REPLACE VIEW servicecustomer AS 
+  SELECT  s.cname, cus.ccity, c.make, c.model , s.servinv, s.serdate, (s.partscost+s.laborcost) AS servinvtotal 
+ FROM servinv s 
+ INNER JOIN customer cus ON s.cname = cus.cname 
+ INNER JOIN car c ON c.serial = s.serial; 
+ 
+/*------Output Results- start ----------------------------------------------------------------------- 
+CNAME,                CCITY,                MAKE,       MODEL,  SERVINV, SERDATE,   SERVINVTOTAL
+JEAN-MICHEL CABANA  	MISSISSAUGA         	ACURA     	DSA     	W0206	2015-05-20	35
+JEAN-MICHEL CABANA  	MISSISSAUGA         	ACURA     	DSA     	W0202	2015-05-20	125
+TYLER ABBOTT        	ST THOMAS           	JAGUAR    	XKR     	W0097	2013-03-26	45.99
+TYLER ABBOTT        	ST THOMAS           	ACURA     	DSG     	W0096	2013-03-26	45.99
+TYLER ABBOTT        	ST THOMAS           	ACURA     	DSG     	W0089	2013-02-08	165.99
+TYLER ABBOTT        	ST THOMAS           	ACURA     	DSG     	W0088	2013-02-01	65.99
+SHERYLE IPULAN      	TORONTO             	MAKE      	SI      	W0147	2015-01-03	305.05
+SHERYLE IPULAN      	TORONTO             	ACURA     	RSX     	W0114	2014-01-02	303.03
+SHERYLE IPULAN      	TORONTO             	ACURA     	RSX     	W0086	2013-01-01	300
+GARY HALBIG         	OAKVILLE            	ACURA     	RSX     	W0064	2011-03-03	256.44
+GARY HALBIG         	OAKVILLE            	ACURA     	RSX     	W0216	2015-06-11	55
+ARON KHAN           	MARKHAM             	ACURA     	TLS     	W0047	2009-01-25	600
+ARON KHAN           	MARKHAM             	ACURA     	TLS     	W0245	2015-12-25	600
+JOSE ANDRADE        	OAKVILLE            	JAGUAR    	XKR     	W0239	2015-11-15	320
+JOSE ANDRADE        	OAKVILLE            	JAGUAR    	XKR     	W0236	2015-10-20	140
+JOSE ANDRADE        	OAKVILLE            	JAGUAR    	XKR     	W0219	2015-08-02	600
+HEISEI POMPOCO      	Toronto             	ACURA     	XTY3    	W0016	2001-09-13	600
+IAN PAUL FREELEY    	TORONTO             	LAND ROVER	SERIESII	W0076	2012-03-14	85.62
+IAN PAUL FREELEY    	TORONTO             	LAND ROVER	SERIESII	W0063	2011-01-12	62.62
+JAKE CHOMSKY        	BRAMPTON            	ACURA     	MDX     	W0067	2011-05-16	29
+JAMES BARREDO       	MILTON              	ACURA     	NSX     	W0039	2005-03-17	510
+JAMES BARREDO       	MILTON              	ACURA     	NSX     	W0036	2005-01-17	200
+JAMES HOWLETT       	MISSISSAUGA         	ACURA     	MDX     	W0170	2015-03-01	0
+JESSICA MINNICH     	KELOWNA             	ACURA     	TLX     	W0268	2016-03-15	42
+JESSICA MINNICH     	KELOWNA             	ACURA     	TLX     	W0260	2016-02-10	182
+JOANE WHITE         	SOMECITY            	JAGUAR    	FTYPE   	W0095	2013-03-16	710
+JOANE WHITE         	SOMECITY            	JAGUAR    	FTYPE   	W0087	2013-01-16	360
+JOHN MCGUIRE        	TORONTO             	JAGUAR    	XE      	W0265	2016-03-01	807
+JOHN MCLANE         	MISSISSAUGA         	ACURA     	RSK     	W0013	2001-08-15	0
+JOHN1MARSHALL       	KITCHENER           	JAGUAR    	SMALLVAN	W0318	2016-05-31	20000
+JOSELLE GO          	MISSISSAUGA         	JAGUAR    	200SE   	W0176	2015-03-01	0
+JOSELLE GO          	MISSISSAUGA         	JAGUAR    	200SE   	W0175	2015-03-01	0
+JOSELLE GO          	MISSISSAUGA         	JAGUAR    	200SE   	W0163	2015-03-01	0
+JOSEPH HARTWELL     	Montreal            	JAGUAR    	F-TYPE  	W0045	2008-05-16	500.5
+JOSEPH HARTWELL     	Montreal            	JAGUAR    	F-TYPE  	W0044	2007-05-16	145.6
+JUMPMAN             	HOOPCITY            	MERCEDES  	BENZ    	W0271	2016-03-21	119
+JUMPMAN             	HOOPCITY            	MERCEDES  	BENZ    	W0232	2015-09-21	140
+JUNG HOON CHOI      	Oakville            	JAGUAR    	TTT4    	W0019	2002-03-16	670
+JUNG HOON CHOI      	Oakville            	JAGUAR    	TTT4    	W0005	2001-04-16	430
+KANISHK SAHNI       	LONDON              	JAGUAR    	SPORTS  	W0231	2015-09-21	985
+KASSANDRA FRIAS     	KITCHENER           	JAGUAR    	XE      	W0068	2011-06-16	34
+KASSANDRA FRIAS     	KITCHENER           	JAGUAR    	XE      	W0062	2010-12-16	54
+LIZZIE URRUTIA      	OAKVILLE            	JAGUAR    	F       	W0322	2016-06-01	80
+LIZZIE URRUTIA      	OAKVILLE            	JAGUAR    	F       	W0306	2016-05-20	275
+LUCAS NGUYEN        	MISSISSAUGA         	MERCEDES  	CLS     	W0173	2015-03-01	0
+LUCAS NGUYEN        	MISSISSAUGA         	MERCEDES  	CLS     	W0172	2015-03-01	0
+LUCY KIM            	Burlington          	JAGUAR    	XEF     	W0312	2016-05-30	650
+MALORY ARCHER       	TORONTO             	MERCEDES  	SINETRA 	W0301	2016-05-18	240
+MALORY ARCHER       	TORONTO             	MERCEDES  	SINETRA 	W0280	2016-04-11	90
+MALORY ARCHER       	TORONTO             	MERCEDES  	SINETRA 	W0246	2016-01-01	90
+MARK DENNIS         	OAKVILLE            	MERCEDES  	SL1     	W0038	2005-02-16	100
+MARK DENNIS         	OAKVILLE            	MERCEDES  	SL1     	W0035	2004-02-16	300
+MARK DENNIS         	OAKVILLE            	MERCEDES  	SL1     	W0027	2003-02-16	201
+MARK THIBAULT       	OAKVILLE            	ACURA     	MDX     	W0040	2005-04-16	40
+MARK THIBAULT       	OAKVILLE            	ACURA     	MDX     	W0182	2015-03-16	50
+MARK THIBAULT       	OAKVILLE            	ACURA     	MDX     	W0127	2014-05-16	200
+MARTIN CLARE        	SMALLVILLE          	JAGUAR    	XJ      	W0168	2015-03-01	0
+AUSTIN PEREIRA      	Brampton            	ACURA     	RSX     	W0316	2016-05-31	0
+AUSTIN PEREIRA      	Brampton            	ACURA     	RSX     	W0286	2016-04-18	0
+CREST PHIPMAN       	Gilpway             	ACURA     	RSX     	W0252	2016-01-10	3000
+CREST PHIPMAN       	Gilpway             	ACURA     	RSX     	W0250	2016-01-09	1750
+GAGANJOT SINGH      	Brampton            	ACURA     	MDX     	W0274	2016-03-31	160
+GAGANJOT SINGH      	Brampton            	ACURA     	MDX     	W0272	2016-03-29	150
+KEVIN BARKER        	Waterdown           	ACURA     	RSX     	W0140	2014-11-17	384.98
+KEVIN BARKER        	Waterdown           	ACURA     	RSX     	W0124	2014-04-06	384.98
+KEVIN BARKER        	Waterdown           	ACURA     	RSX     	W0108	2013-11-04	384.98
+KIM MONTES          	Brampton            	ACURA     	RSX     	W0303	2016-05-20	0
+PALLAV              	BRAMPTON            	ACURA     	RSX     	W0146	2015-01-02	0
+PALLAV              	BRAMPTON            	ACURA     	RSX     	W0139	2014-11-08	0
+SUHAVI              	TORONTO             	JAGUAR    	S-AWD   	W0329	2016-07-12	589
+SUHAVI              	TORONTO             	JAGUAR    	S-AWD   	W0295	2016-05-05	300
+SUKHVEER.D          	BRAMPTON            	ACURA     	RSX     	W0334	2016-07-25	470
+SUKHVEER.D          	BRAMPTON            	ACURA     	RSX     	W0305	2016-05-20	710
+SUKHVEER.D          	BRAMPTON            	ACURA     	RSX     	W0269	2016-03-20	420
+WILLIS DEROSE       	Forkworth           	ACURA     	RSX     	W0255	2016-01-15	3300
+ANDREW SMITH        	Aurora              	ACURA     	NSX     	W0241	2015-12-16	0
+BOBBY               	Oakville            	JAGUAR    	FTYPE   	W0079	2012-04-16	450
+BOBBY1              	Oakville            	JAGUAR    	FTYPE   	W0078	2012-04-16	450
+DAVID NIJJAR        	MISSISSAUGA         	ACURA     	UX      	W0328	2016-06-30	2100
+JAKE SHAKE          	Seattle             	MERCEDES  	E-CLASS 	W0367	2017-02-09	1300
+ZACH FISCH          	TORONTO             	NISSAN    	ROGUE   	W0361	2017-01-20	270
+ZACH FISCH          	TORONTO             	NISSAN    	ROGUE   	W0357	2017-01-17	200
+ZACH FISCH          	TORONTO             	NISSAN    	ROGUE   	W0356	2017-01-03	130
+JOHN APPLE          	Mesa                	ACURA     	RLX     	W0015	2001-09-03	350
+JUSTIN BENTO        	MISSISSAUGA         	MERCEDES  	CLK     	W0324	2016-06-02	0
+JUSTIN BENTO        	MISSISSAUGA         	MERCEDES  	CLK     	W0321	2016-06-01	0
+JUSTIN BENTO        	MISSISSAUGA         	MERCEDES  	CLK     	W0317	2016-05-31	0
+KEISHA WALLACE      	Mississauga         	MERCEDES  	CLA     	W0012	2001-07-31	0
+KEISHA WALLACE      	Mississauga         	MERCEDES  	CLA     	W0011	2001-06-30	0
+KEISHA WALLACE      	Mississauga         	MERCEDES  	CLA     	W0009	2001-05-31	0
+MARY SOUCHIE        	Oakland             	MERCEDES  	SL      	W0014	2001-09-03	50
+MATHEW SLATER       	GEORGETOWN          	MERCEDES  	R63-AMG 	W0243	2015-12-18	0
+MATHEW SLATER       	GEORGETOWN          	MERCEDES  	R63-AMG 	W0230	2015-09-21	0
+MATHEW SLATER       	GEORGETOWN          	MERCEDES  	R63-AMG 	W0187	2015-04-25	0
+MICHAEL             	Burlington          	JAGUAR    	XJ      	W0323	2016-06-02	150
+MICHAEL             	Burlington          	JAGUAR    	XJ      	W0319	2016-06-01	300
+MICHAEL             	Burlington          	JAGUAR    	XJ      	W0315	2016-05-31	225
+MICHAEL1            	Burlington          	ACURA     	NSX     	W0074	2012-02-16	350
+RYAN BROWN          	MISSISSAUGA         	ACURA     	NSX     	W0294	2016-05-04	0
+RYAN BROWN          	MISSISSAUGA         	ACURA     	NSX     	W0275	2016-04-04	0
+RYAN BROWN          	MISSISSAUGA         	ACURA     	NSX     	W0264	2016-02-21	0
+STERLING JETHA      	BURLINGTON          	ACURA     	TSX     	W0313	2016-05-30	900
+STERLING JETHA      	BURLINGTON          	ACURA     	TSX     	W0298	2016-05-15	250
+STERLING JETHA      	BURLINGTON          	ACURA     	TSX     	W0284	2016-04-12	600
+ALEK NAHA           	BRAVOS              	JAGUAR    	F       	W0167	2015-03-01	0
+ALEX                	toronto             	ACURA     	FRS     	W0023	2002-05-14	1500
+ALEX                	toronto             	JAGUAR    	COOL    	W0021	2002-05-14	3500
+ALEX PARK           	OAKVILLE            	LAND ROVER	LDX     	W0008	2001-05-16	15
+ALISSA NONATO       	OAKVILLE            	MERCEDES  	CLS     	W0162	2015-03-01	0
+ALISSA NONATO       	OAKVILLE            	MERCEDES  	CLS     	W0161	2015-03-01	0
+ANGE JOLI           	OAKVILLE            	JAGUAR    	XKD     	W0007	2001-05-16	62.49
+ANGE JOLI           	OAKVILLE            	JAGUAR    	XKD     	W0198	2015-05-16	25.49
+ANIS                	RODEHO              	ACURA     	RSX     	W0022	2002-05-14	1500
+ANIS                	RODEHO              	JAGUAR    	COOL    	W0020	2002-05-14	3500
+ANUKARAN            	OAKVILLE            	ACURA     	TSX     	W0291	2016-05-01	1153
+AYY LMAO            	NEWDUMFRIES         	JAGUAR    	123     	W0346	2016-10-02	6000
+AYY LMAO            	NEWDUMFRIES         	JAGUAR    	123     	W0337	2016-08-02	4000
+AYY LMAO            	NEWDUMFRIES         	JAGUAR    	123     	W0293	2016-05-02	2000
+BART SIMPSON        	SPRINGFIELD         	JAGUAR    	III     	W0289	2016-04-28	170
+CHIN CHONG CHA X    	OAKVILLE            	ACURA     	TSX     	W0050	2010-01-12	0
+CHIN CHONG CHA X    	OAKVILLE            	ACURA     	TSX     	W0254	2016-01-13	0
+CHIN CHONG CHA X    	OAKVILLE            	ACURA     	TSX     	W0253	2016-01-11	0
+CHRIS PECKOVER      	Oakville            	ACURA     	NSX     	W0025	2003-01-16	6501.09
+CHRIS PECKOVER      	Oakville            	ACURA     	NSX     	W0018	2002-01-16	10029.67
+CHRIS SARVGHADI     	MISSISSAUGA         	JAGUAR    	C9      	W0066	2011-05-11	1000
+CHRIS SARVGHADI     	MISSISSAUGA         	JAGUAR    	C9      	W0081	2012-06-10	1325
+CHRISTOPHER GLOYD   	OAKVILLE            	JAGUAR    	F-TYPE  	W0041	2005-04-16	0
+CHRISTOPHER GLOYD   	OAKVILLE            	JAGUAR    	F-TYPE  	W0082	2012-08-16	0
+CHUI KIM            	CALGARY             	LAND ROVER	SC      	W0048	2009-07-17	700
+CORNELIA SCHWANN    	oakville            	MERCEDES  	SPRINTER	W0304	2016-05-20	0
+DANIEL DENNIS       	OAKVILLE            	MERCEDES  	SL1     	W0037	2005-02-16	100
+DANIEL DENNIS       	OAKVILLE            	MERCEDES  	SL1     	W0034	2004-02-16	300
+DANIEL DENNIS       	OAKVILLE            	MERCEDES  	SL1     	W0029	2003-02-16	201
+EDDIE D. HEAD       	LONDON              	MERCEDES  	GTS     	W0292	2016-05-01	41.65
+EDDIE D. HEAD       	LONDON              	MERCEDES  	GTS     	W0267	2016-03-10	31.65
+EDWARD KIM          	Burlington          	JAGUAR    	XEF     	W0311	2016-05-30	650
+ERIC CARTMAN        	SOUTH PARK          	MERCEDES  	X0X     	W0270	2016-03-20	320
+ERIC SHARMA         	BRAMPTON            	JAGUAR    	XJ220   	W0299	2016-05-15	0
+ERIC SHARMA         	BRAMPTON            	JAGUAR    	XJ220   	W0251	2016-01-10	0
+ERIC SHARMA         	BRAMPTON            	JAGUAR    	XJ220   	W0225	2015-09-01	0
+FARVA               	HAMILTON            	LANDROVER 	COMMNDER	W0352	2016-12-22	2650
+FETICHA             	MILTON              	ACURA     	NSX     	W0107	2013-09-02	212.45
+FRED JONES          	MILTON              	MERCEDES  	ESCAPE  	W0237	2015-11-03	40
+GUYBRUSH THREEPWOOD 	PUERTO POLLO        	MERCEDES  	S-CLASS 	W0256	2016-01-21	220
+HABIB G             	Mississauga         	ACURA     	MDX     	W0278	2016-04-07	150
+HABIB G             	Mississauga         	ACURA     	MDX     	W0249	2016-01-08	250
+HASSAN MAHMOOD      	MILTON              	JAGUAR    	J12     	W0171	2015-03-01	0
+HASSAN MAHMOOD      	MILTON              	JAGUAR    	J12     	W0165	2015-03-01	0
+GARNER MCJANNETT    	BURLINGTON          	ACURA     	TL      	W0201	2015-05-18	0
+GARNER MCJANNETT    	BURLINGTON          	ACURA     	TL      	W0192	2015-05-04	0
+GARNER MCJANNETT    	BURLINGTON          	MERCEDES  	SLR     	W0190	2015-05-01	0
+ALI                 	mississauga         	ACURA     	RSX     	W0046	2009-01-01	915
+ALI                 	mississauga         	MERCEDES  	ML      	W0110	2013-12-14	0
+JOSE CAMPOS         	MISSISSAUGA         	ACURA     	MODEL   	W0149	2015-01-09	721.1
+JOSE CAMPOS         	MISSISSAUGA         	ACURA     	MODEL   	W0145	2015-01-01	591.1
+DANIEL ROSALES      	TORONTO             	MERCEDES  	MODEL   	W0113	2014-01-01	701.1
+GORDON PITT         	OAKVILLE            	ACURA     	CSX     	W0215	2015-05-27	0
+STEVE YZERMAN       	DETROIT             	MERCEDES  	SLK     	W0204	2015-05-20	0
+CHRIS OSGOOD        	DETROIT             	ACURA     	CSX     	W0186	2015-04-20	0
+ALAA ATRI           	MISSISSAUGA         	MERCEDES  	AMG63   	W0240	2015-12-01	540
+ALAA ATRI           	MISSISSAUGA         	MERCEDES  	AMG63   	W0189	2015-05-01	54000
+JOE                 	OAKVILLE            	ACURA     	RSX     	W0336	2016-07-25	5
+JOE                 	OAKVILLE            	ACURA     	RSX     	W0335	2016-07-25	121
+JOE                 	OAKVILLE            	ACURA     	RSX     	W0333	2016-07-24	4
+AHMED KHATTAB       	MISSISSAUGA         	ACURA     	RSX     	W0112	2013-12-26	198.99
+AHMED KHATTAB       	MISSISSAUGA         	ACURA     	RSX     	W0111	2013-12-17	80
+JACK BLACK          	BRAMPTON            	MERCEDES  	CLK550  	W0116	2014-02-15	374.99
+KENNY               	SANANDREAS          	MERCEDES  	G-CLASS 	W0229	2015-09-18	1000
+KENNY               	SANANDREAS          	MERCEDES  	G-CLASS 	W0221	2015-08-21	500
+KENNY               	SANANDREAS          	JAGUAR    	X-TYPE  	W0218	2015-07-31	255.23
+RAJINDER SINGH      	BRAMPTON            	MERCEDES  	M550    	W0103	2013-05-10	350
+AMANDEEP            	BRAMPTON            	LAND ROVER	R70     	W0101	2013-05-04	110
+BORIS AGUILAR       	Oakville            	JAGUAR    	S-TYPE  	W0214	2015-05-23	145
+BORIS AGUILAR       	Oakville            	JAGUAR    	S-TYPE  	W0211	2015-05-23	70
+PHOEBE BUERON       	OAKVILLE            	JAGUAR    	JAG123  	W0117	2014-03-16	15786
+BRAD PITT           	TORONTO             	MERCEDES  	MER987  	W0118	2014-03-16	4076
+ZAKEIR SAMSOODIN    	MISSISSAUGA         	JAGUAR    	XJ      	W0075	2012-03-12	711.1
+EDDIE THOMPSON      	BRAMPTON            	ACURA     	RSX     	W0024	2002-08-28	171.55
+EDDIE THOMPSON      	BRAMPTON            	ACURA     	RSX     	W0002	2000-01-18	283.55
+ROBERT SILVEIRA     	OAKVILLE            	JAGUAR    	XL      	W0099	2013-04-07	300
+ROBERT SILVEIRA     	OAKVILLE            	JAGUAR    	XL      	W0098	2013-04-04	140
+ROBERT SILVEIRA     	OAKVILLE            	JAGUAR    	XL      	W0093	2013-03-04	500
+JOHN DOE            	MILTON              	ACURA     	TLX     	W0070	2012-01-16	455
+JAMES MARTIN        	BRAMPTON            	JAGUAR    	XKR     	W0185	2015-04-06	530
+TOM HOPE            	Mississauga         	MERDECES  	SLR     	W0125	2014-04-23	1222.09
+TOM HOPE            	Mississauga         	MERDECES  	SLR     	W0115	2014-01-26	164.1
+TOM HOPE            	Mississauga         	MERDECES  	SLR     	W0109	2013-11-12	796.78
+JAIMEE GONZAGA      	ROFLVILLE           	HONDA     	ACURA   	W0136	2014-08-21	6000
+WILMA FLINSTONE     	BEDROCK             	HONDA     	ACURA   	W0135	2014-08-21	5500
+DAN ACKLAND         	BRAMPTON            	MERCEDES  	L65     	W0180	2015-03-11	700
+DAN ACKLAND         	BRAMPTON            	MERCEDES  	L65     	W0142	2014-12-04	700
+DAN ACKLAND         	BRAMPTON            	MERCEDES  	L65     	W0134	2014-07-23	700
+ANDREW AUBERTINSS   	ST. CATHARINES      	ACURA     	INTEGRA 	W0154	2015-02-02	6823.51
+DAVID MILLSSS       	TORONOTO            	ACURA     	INTEGRA 	W0153	2015-02-02	1832.42
+ROB BAK             	Oakville            	LAND ROVER	FTYPE   	W0071	2012-01-16	300
+SHAUN HOLTER        	mississauga         	JAGUAR    	S-TYPE  	W0212	2015-05-23	125
+SHAWN WATSON        	Burlington          	JAGUAR    	PRO     	W0085	2012-12-15	305.53
+MIKE VIAU2          	BRAMPTON            	JAGUAR    	MARK IV 	W0207	2015-05-22	280
+MIKE VIAU2          	BRAMPTON            	JAGUAR    	MARK IV 	W0129	2014-05-21	280
+MIKE VIAU2          	BRAMPTON            	MERCEDES  	CLK63AMG	W0128	2014-05-20	180
+ABDALLA FREIHAT     	MISSISSAUGA         	MERCEDES  	BENZ    	W0053	2010-01-21	700
+JASON               	MISSISSAUGA         	MERCEDES  	E-CLASS 	W0210	2015-05-23	1000.99
+JASON               	MISSISSAUGA         	MERCEDES  	E-CLASS 	W0177	2015-03-03	357.66
+JASON               	MISSISSAUGA         	MERCEDES  	E-CLASS 	W0152	2015-01-23	73.66
+STANLEY LEE         	BRAMPTON            	ACURA     	RX4     	W0073	2012-01-27	2900
+STANLEY LEE         	BRAMPTON            	MERCEDES  	MRX     	W0094	2013-03-12	6070
+STANLEY LEE         	BRAMPTON            	ACURA     	RX4     	W0083	2012-08-27	4900
+JEREMY SISON        	MISSISSAUGA         	ACURA     	RSX     	W0224	2015-08-30	150
+JEREMY SISON        	MISSISSAUGA         	ACURA     	RSX     	W0137	2014-09-21	300
+HARMANJEET MUNDAY   	BRAMPTON            	ACURA     	RSX     	W0091	2013-02-18	170
+UPASANA KHARBANDA   	Mississauga         	JAGUAR    	J3      	W0077	2012-03-15	999
+UPASANA KHARBANDA   	Mississauga         	MERCEDES  	MDX     	W0069	2012-01-12	899
+UPASANA KHARBANDA   	Mississauga         	MERCEDES  	MDX     	W0092	2013-02-21	1350
+DANNY HANDA         	BRAMPTON            	ACURA     	TSX     	W0138	2014-10-12	240.2
+DANNY HANDA         	BRAMPTON            	ACURA     	TSX     	W0106	2013-08-12	170.55
+DANNY HANDA         	BRAMPTON            	ACURA     	TSX     	W0090	2013-02-12	120.55
+AZIZ AYBOUT         	OAKVILLE            	LAND ROVER	BNG     	W0200	2015-05-18	40
+KAREN YOUNG         	BOLTON              	ACURA     	RSX     	W0080	2012-05-15	400
+CORY SVENSSON       	Mississauga         	MERCEDES  	FUNMOB  	W0054	2010-01-23	6406.47
+CARL EDWARDS        	MISSISSAUGA         	JAGUAR    	RMV     	W0179	2015-03-05	150
+CARL EDWARDS        	MISSISSAUGA         	JAGUAR    	RMV     	W0156	2015-02-05	300
+CARL EDWARDS        	MISSISSAUGA         	JAGUAR    	RMV     	W0148	2015-01-05	500.8
+ANJU KOHLI          	MISSISSAUGA         	ACURA     	RNG     	W0196	2015-05-15	57.7
+ANJU KOHLI          	MISSISSAUGA         	ACURA     	RNG     	W0191	2015-05-01	40.99
+ANJU KOHLI          	MISSISSAUGA         	ACURA     	RNG     	W0188	2015-04-29	12
+JIE DONG            	OAKVILLE            	MERCEDES  	SLK500  	W0194	2015-05-09	130
+JIE DONG            	OAKVILLE            	MERCEDES  	SLK500  	W0157	2015-02-20	170
+JIE DONG            	OAKVILLE            	MERCEDES  	SLK500  	W0121	2014-03-17	0
+MICHAL BARTOSIK     	BRAMPTON            	ACURA     	NSX     	W0205	2015-05-20	600
+JASON VIEIRA        	BRAMPTON            	ACURA     	LSX     	W0199	2015-05-17	150
+JASON VIEIRA        	BRAMPTON            	ACURA     	LSX     	W0197	2015-05-15	150
+JACK TOM            	BRAMPTON            	ACURA     	LSX     	W0195	2015-05-12	150
+FAIZA IFTIKHAR      	BRAMPTON            	JAGUAR    	HSE     	W0217	2015-07-29	246
+FAIZA IFTIKHAR      	BRAMPTON            	JAGUAR    	HSE     	W0133	2014-07-01	250
+FAIZA IFTIKHAR      	BRAMPTON            	JAGUAR    	HSE     	W0131	2014-06-01	262
+FAIZA IFTIKHAR      	BRAMPTON            	JAGUAR    	HSE     	W0126	2014-05-01	510
+BRIAN VO            	MISSISSAUGA         	ACURA     	ATX     	W0104	2013-05-15	20
+BRIAN VO            	MISSISSAUGA         	ACURA     	ATX     	W0102	2013-05-04	20
+BRIAN VO            	MISSISSAUGA         	ACURA     	ATX     	W0100	2013-04-10	20
+ASHLYN CONWAY       	NEWMARKET           	LAND ROVER	HSE     	W0372	2916-08-06	1133.98
+ASHLYN CONWAY       	NEWMARKET           	LAND ROVER	HSE     	W0371	2916-04-06	209.98
+ASHLYN CONWAY       	NEWMARKET           	LAND ROVER	HSE     	W0370	2916-04-01	4133.98
+MATS HUMMELS        	NEW HAMBURG         	JAGUAR    	F-PACE S	W0242	2015-12-18	400
+MATTHEW ROHALY      	OAKVILLE            	MERCEDES  	SLK     	W0043	2006-03-16	800
+MATTHEW ROHALY      	OAKVILLE            	MERCEDES  	SLK     	W0032	2003-06-16	750
+MATTHEW ROHALY      	OAKVILLE            	MERCEDES  	SLK     	W0028	2003-02-16	700
+MICHAEL ALAMPI      	STONEY CREEK        	JAGUAR    	RLX     	W0060	2010-06-16	355.5
+NICK ROSE           	LONDON              	MERCEDES  	CLA     	W0300	2016-05-16	625.62
+NIZETTE ROBAS       	MISSISSAUGA         	MERCEDES  	SL      	W0287	2016-04-23	280
+NIZETTE ROBAS       	MISSISSAUGA         	MERCEDES  	SL      	W0263	2016-02-20	150
+NOE ASCENCIO        	oakville            	MERCEDES  	MDX     	W0307	2016-05-20	0
+OBAID G             	Mississauga         	MERCEDEZ  	CLS     	W0248	2016-01-08	149
+PATRICK GREENE      	OAKVILLE            	MERCEDES  	CLS     	W0320	2016-06-01	66.99
+PATRICK SIMMONS     	BURLINGTON          	LAND ROVER	SPORT   	W0339	2016-08-19	445
+PATRICK SIMMONS     	BURLINGTON          	LAND ROVER	SPORT   	W0332	2016-07-18	636
+PATRICK STEVENSON   	MISSISSAUGA         	ACURA     	EL      	W0058	2010-06-08	90
+PATRIK ROSE         	MISSISSAUGA         	JAGUAR    	XE      	W0017	2001-12-16	0
+PATRIK ROSE         	MISSISSAUGA         	JAGUAR    	XE      	W0004	2001-03-16	150
+PETER               	TORONTO             	JAGUAR    	XE      	W0010	2001-06-16	40
+PETER               	TORONTO             	JAGUAR    	XE      	W0006	2001-05-16	150
+PETER GRIFFIN       	RHODE ISLAND        	LAND ROVER	123     	W0261	2016-02-18	550
+PETER KANAREK       	MISSISSAUGA         	MERCEDES  	CLS     	W0309	2016-05-27	20
+PETER PAN           	Forest              	ACURA     	MDX     	W0283	2016-04-12	270
+PETER PAN           	Forest              	ACURA     	MDX     	W0259	2016-02-05	1500
+PHILIP PEDERSEN     	OTTAWA              	MERCEDES  	SLK-200 	W0326	2016-06-10	1220
+PHILIP PEDERSEN     	OTTAWA              	MERCEDES  	SLK-200 	W0262	2016-02-19	2650
+POI POI             	OAKVILLE            	ACURA     	S44     	W0159	2015-03-01	0
+POPEYE              	DISNEYLAND          	ACURA     	ILX     	W0026	2003-01-16	0
+RAFAEL BATTESTI     	OAKVILLE            	BMW       	I8      	W0308	2016-05-24	41.65
+REBECCA SONG        	OAKVILLE            	ACURA     	EX      	W0273	2016-03-30	230
+RICHARD SIMMONS     	TORONTO             	ACURA     	ABC     	W0174	2015-03-01	0
+ROBERTFE            	BURLINGTON          	MERCEDES  	ML350   	W0331	2016-07-12	0
+ROBERTFE            	BURLINGTON          	MERCEDES  	ML350   	W0084	2012-12-03	0
+RON SWANSON         	OAKVILLE            	ACURA     	ILX     	W0244	2015-12-23	450
+RON SWANSON         	OAKVILLE            	ACURA     	ILX     	W0105	2013-07-01	200
+SAKSHI              	OAKVILLE            	LAND ROVER	LR4     	W0290	2016-05-01	1153
+SAM PENNELLS        	MISSISSAUGA         	ACURA     	2-SERIES	W0302	2016-05-19	300
+SAM PENNELLS        	MISSISSAUGA         	ACURA     	2-SERIES	W0276	2016-04-07	120
+SAM SMITH           	HAMILTON            	JAGUAR    	UX      	W0266	2016-03-10	88
+SAM SMITH           	HAMILTON            	JAGUAR    	UX      	W0247	2016-01-01	380
+SCOTT TAYLOR        	GEORGETOWN          	JAGUAR    	XE      	W0325	2016-06-03	25000
+SHERLOCK HOLMES     	LONDON              	ACURA     	NSX     	W0056	2010-03-16	145
+SHERLOCK HOLMES     	LONDON              	ACURA     	NSX     	W0055	2010-02-16	125
+SHERLOCK HOLMES     	LONDON              	ACURA     	NSX     	W0052	2010-01-16	105
+SILVANA             	MISSISSAUGA         	JAGUAR    	XF      	W0072	2012-01-16	518
+STEFAN SLE          	OAKVILLE            	MERCEDES  	S       	W0166	2015-03-01	0
+STEPHEN BALINT      	London              	JAGUAR    	XJ      	W0119	2014-03-17	2900
+STEVEN BAN          	MISSISSAUGA         	MERCEDES  	SLK     	W0042	2006-03-16	800
+STEVEN BAN          	MISSISSAUGA         	MERCEDES  	SLK     	W0031	2003-06-16	750
+STEVEN BAN          	MISSISSAUGA         	MERCEDES  	SLK     	W0030	2003-02-16	700
+TAMAKI SUOU         	OURAN               	ACURA     	NSX     	W0310	2016-05-27	120
+TOBIAS EATON        	OAKVILLE            	ACURA     	RLX     	W0285	2016-04-18	120
+VICTOR              	OAKVILLE            	ACURA     	NFX     	W0061	2010-06-16	595
+VICTOR              	OAKVILLE            	ACURA     	NFX     	W0059	2010-06-16	382
+WENDY PAN           	Forest              	ACURA     	MDX     	W0282	2016-04-12	270
+WENDY PAN           	Forest              	ACURA     	MDX     	W0258	2016-02-05	1500
+XANDER BOURG        	Simcoe              	JAGUAR    	XJ      	W0120	2014-03-17	3300
+YOGI BEAR           	MISSISSAUGA         	MERCEDES  	200SE   	W0164	2015-03-01	0
+YOGI BEAR           	MISSISSAUGA         	MERCEDES  	200SE   	W0160	2015-03-01	0
+YOGI BEAR           	MISSISSAUGA         	MERCEDES  	200SE   	W0158	2015-03-01	0
+ZHIXUAN             	oakville            	ACURA     	VXX     	W0169	2015-03-01	0
+BERNARDO SIQUEIRA   	Oakville            	MERCEDES  	C450    	W0234	2015-09-28	430
+BERNARDO SIQUEIRA   	Oakville            	MERCEDES  	C450    	W0226	2015-09-07	570
+BERNARDO SIQUEIRA   	Oakville            	MERCEDES  	C450    	W0222	2015-08-29	330
+CHEYSER CELESTINO   	Oakville            	ACURA     	ILX     	W0155	2015-02-05	630.4
+COLE                	ACITY               	ACURA     	555     	W0144	2015-01-01	0
+DAVID BERNACKI      	Rockwood            	MERCEDES  	SLK     	W0228	2015-09-18	100
+FRED                	ACITY               	MERCEDES  	557     	W0123	2014-03-22	0
+FRED                	ACITY               	LAND ROVER	556     	W0122	2014-03-22	0
+JIN HWAN OH         	OAKVILLE            	MERCEDES  	AAA     	W0001	1999-04-13	5999
+JUAN MENDIOLA       	Oklahoma City       	MERCEDES  	C300    	W0227	2015-09-11	535
+JUAN MENDIOLA       	Oklahoma City       	MERCEDES  	C300    	W0178	2015-03-03	170
+JUAN MENDIOLA       	Oklahoma City       	MERCEDES  	C300    	W0151	2015-01-21	375.35
+MARY POPPINS        	Oakville            	MERCEDES  	CLX     	W0359	2017-01-18	300
+MARY POPPINS        	Oakville            	MERCEDES  	CLX     	W0358	2017-01-18	200
+JUNG HYUN RHOE      	Oakville            	MERCEDES  	GLX AMG 	W0350	2016-11-17	1650
+JUNG HYUN RHOE      	Oakville            	MERCEDES  	GLX AMG 	W0341	2016-08-26	250
+JUNG HYUN RHOE      	Oakville            	MERCEDES  	GLX AMG 	W0296	2016-05-11	400
+ADAM                	Mississauga         	LAND ROVER	DEFEN-90	W0051	2010-01-16	900
+MARIO               	NintendoLand        	HYBRID    	RLX     	W0033	2003-08-16	2000
+CHRIS BANYARD       	Toronto             	JAGUAR    	XL      	W0279	2016-04-08	1450
+CHRIS BANYARD       	Toronto             	JAGUAR    	XL      	W0277	2016-04-07	350
+CHRIS BANYARD       	Toronto             	JAGUAR    	XL      	W0150	2015-01-20	182
+NAFE MCNAFEE        	Oakville            	ACURA     	MDX15   	W0366	2017-02-07	850
+DON DRAPER          	Toronto             	MERCEDES  	CLSW218 	W0362	2017-01-28	1100
+ROGER STERLING      	Toronto             	JAGUAR    	XE760   	W0365	2017-02-01	950
+ANTHONY BACHMEIER   	TORONTO             	ACURA     	TLX     	W0327	2016-06-25	1700
+--------Output Results - End ---------------------------------------------------------------------*/

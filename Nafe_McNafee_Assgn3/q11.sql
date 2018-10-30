@@ -1,0 +1,86 @@
+/*
+File: q11
+Author: Nafe McNafee
+Description:  List all 2016 cars which are not sold (serial#, make, model). 
+              Add (option#, optiondesc, option list price) if they have options.
+
+*/ 
+/* NOTE: Unsold cars DO NOT have options */ 
+SELECT serial, make, model
+  FROM s11.car 
+ WHERE serial IN (SELECT serial FROM s11.car WHERE cyear = '2016' 
+                  MINUS 
+                  SELECT serial FROM s11.saleinv)
+ ORDER BY serial ASC;
+/*------Output Results- start ---------------------------
+A16B5550	ACURA     	555     
+A16BFRS0	ACURA     	FRS     
+A16BILX0	ACURA     	ILX     
+A16BMDX9	ACURA     	MDX     
+A16BNSX2	ACURA     	NSX     
+A16BRLX1	ACURA     	RLX     
+A16BTLX1	ACURA     	TLX     
+A16BTLX7	ACURA     	TLX     
+A16BTSX0	ACURA     	TSX     
+A16LMDX1	ACURA     	MDX     
+A16PRSX0	ACURA     	RSX     
+A16RILX1	ACURA     	ILX     
+A16RMDX1	ACURA     	MDX     
+A16RMDX8	ACURA     	MDX     
+A16RMDX9	ACURA     	MDX     
+A16RMKX9	ACURA     	MKX     
+A16RNSX0	ACURA     	NSX     
+A16RNSX3	ACURA     	NSX     
+A16RTLS0	ACURA     	TLS     
+A16SNSX0	ACURA     	NSX     
+A16STLX1	ACURA     	TLX     
+A16WNSX1	ACURA     	NSX     
+A16WTSX3	ACURA     	TSX     
+A16WTSX4	ACURA     	TSX     
+A16WTSX5	ACURA     	TSX     
+H16RACU1	HONDA     	ACURA   
+J16B5580	JAGUAR    	558     
+J16BCOU0	JAGUAR    	COUPE   
+J16BF-T1	JAGUAR    	F-TYPE  
+J16BFTY9	JAGUAR    	FTYPE   
+J16BNLE6	JAGUAR    	NLE     
+J16BUX1 	JAGUAR    	UX      
+J16BX229	JAGUAR    	X22     
+J16BXE3 	JAGUAR    	XE      
+J16R1231	JAGUAR    	123     
+J16RF-T0	JAGUAR    	F-TYPE  
+J16RF-T1	JAGUAR    	F-TYPE  
+J16RXE1 	JAGUAR    	XE      
+J16RXE70	JAGUAR    	XE760   
+J16RXJ1 	JAGUAR    	XJ      
+J16S2000	JAGUAR    	200SE   
+J16WS-A0	JAGUAR    	S-AWD   
+J16WXJ20	JAGUAR    	XJ220   
+L16B5560	LAND ROVER	556     
+L16BSC0 	LAND ROVER	SC      
+L16BSKY2	LAND ROVER	SKY     
+L16BSKY5	LAND ROVER	SKY     
+L16RDIS0	LAND ROVER	DISCOVER
+M16B5570	MERCEDES  	557     
+M16BCJL0	MERCEDES  	CJL     
+M16BCJL1	MERCEDES  	CJL     
+M16BCLA1	MERCEDES  	CLA     
+M16BCLA2	MERCEDES  	CLA     
+M16BCLK1	MERCEDES  	CLK     
+M16BCLS1	MERCEDES  	CLS     
+M16BCLS2	MERCEDES  	CLS     
+M16BGLA1	MERCEDES  	GLA     
+M16BGLZ2	MERCEDES  	GLZ 250 
+M16BGTS1	MERCEDES  	GTS     
+M16GS0  	MERCEDES  	S       
+M16RCLS7	MERCEDEZ  	CLS     
+M16S2000	MERCEDES  	200SE   
+M16SGLC0	MERCEDES  	GLC     
+M16SSIN0	MERCEDES  	SINETRA 
+M16WBEN0	MERCEDES  	BENZ    
+M16WCLX2	MERCEDES  	CLX     
+M16WGLX3	MERCEDES  	GLX     
+M16WGTX3	MERCEDES  	GTX 250 
+M16WSLC2	MERCEDES  	SLCCLASS
+M16YX0X 	MERCEDES  	X0X     
+--------Output Results - End ----------------------------*/
